@@ -1,15 +1,20 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tasky/core/routers/routing.dart';
+
+import '../../features/onboarding/presentation/view/onboarding_view.dart';
+import '../../features/splash/presentation/view/splash_view.dart';
+
 class AppRouters {
   Route generateRoute(RouteSettings settings) {
     // var argument = settings.arguments;
     switch (settings.name) {
-      // case Routing.splash:
-      //   return _buildRoute(SplashView());
+      case Routing.init:
+        return _buildRoute(SplashView());
 
-      // case Routing.onboarding:
-      //   return _buildRoute(OnboardingView());
+      case Routing.onboarding:
+        return _buildRoute(OnboardingView());
       
       default:
         return _buildRoute(
