@@ -22,86 +22,116 @@ class _LoginBodyState extends State<LoginBody> {
   String? finalPhoneNumber;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Form(
-        key: context.read<AuthCubit>().signInFormKey,
-        child: Column(
-          children: [
-            IntlPhoneField(
-              controller: context.read<AuthCubit>().signInPhoneNumber,
-              decoration: InputDecoration(
-                hintText: '123 456-7890',
-                hintStyle: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xffBABABA),
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is SignInSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Log Success"),
               ),
-              initialCountryCode: 'EG',
-              dropdownIconPosition: IconPosition.trailing,
-              flagsButtonPadding: EdgeInsets.symmetric(horizontal: 8),
-              onChanged: (phone) {
-                finalPhoneNumber = phone.completeNumber;
-                setState(() {});
-              },
-            ),
-            TextFormField(
-              controller: context.read<AuthCubit>().signInPassword,
-              obscureText: obscureText,
-              validator: (value) {
-                if (!value!.isValidPassword) {
-                  return 'password not valid';
-                } else {
-                  return null;
-                }
-              },
-              decoration: InputDecoration(
-                hintText: 'Password...',
-                hintStyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff7F7F7F)),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                    borderRadius: BorderRadius.circular(10)),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    obscureText ? Icons.visibility_off : Icons.visibility,
-                    color: Colors.grey,
+            );
+            context.pushReplacementNamed(Routing.myTasks);
+            // context.read<AuthCubit>().getUserProfile();
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => const ProfileScreen(),
+            //   ),
+            // );
+          } else if (state is SignInFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.errMessage),
+              ),
+            );
+          }
+        
+      },
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Form(
+            key: context.read<AuthCubit>().signInFormKey,
+            child: Column(
+              children: [
+                IntlPhoneField(
+                  controller: context.read<AuthCubit>().signInPhoneNumber,
+                  decoration: InputDecoration(
+                    hintText: '123 456-7890',
+                    hintStyle: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xffBABABA),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      obscureText = !obscureText;
-                    });
+                  initialCountryCode: 'EG',
+                  dropdownIconPosition: IconPosition.trailing,
+                  flagsButtonPadding: EdgeInsets.symmetric(horizontal: 8),
+                  onChanged: (phone) {
+                    finalPhoneNumber = phone.completeNumber;
+                    setState(() {});
                   },
                 ),
-              ),
-            ),
-            Gap(24.h),
-            CustomButton(
-                txt: Text(
-                  'Sign In',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700),
+                TextFormField(
+                  controller: context.read<AuthCubit>().signInPassword,
+                  obscureText: obscureText,
+                  validator: (value) {
+                    if (!value!.isValidPassword) {
+                      return 'password not valid';
+                    } else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Password...',
+                    hintStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff7F7F7F)),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(),
+                        borderRadius: BorderRadius.circular(10)),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        obscureText ? Icons.visibility_off : Icons.visibility,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          obscureText = !obscureText;
+                        });
+                      },
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  // log(finalPhoneNumber!);
-                  // context.read<AuthCubit>().signInPhoneNumber.text =
-                  //     finalPhoneNumber!;
+                Gap(24.h),
+                state is SignInLoading
+                ? const CircularProgressIndicator():
+                CustomButton(
+                    txt: Text(
+                      'Sign In',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    onPressed: () {
+                      // log(finalPhoneNumber!);
+                      // context.read<AuthCubit>().signInPhoneNumber.text =
+                      //     finalPhoneNumber!;
                       // log(context.read<AuthCubit>().signInPhoneNumber.text);
-                  context.read<AuthCubit>().signIn(finalPhoneNumber!);
-                  // context.pushReplacementNamed(Routing.)
-                }),
-          ],
-        ),
-      ),
+                      context.read<AuthCubit>().signIn(finalPhoneNumber!);
+                      
+                    }),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

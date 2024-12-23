@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tasky/core/routers/routing.dart';
 import 'package:tasky/features/auth/presentation/view/login.dart';
 import 'package:tasky/features/auth/presentation/view/register.dart';
+import 'package:tasky/features/my_tasks/presentation/view/my_tasks_view.dart';
 
 import '../../features/onboarding/presentation/view/onboarding_view.dart';
 import '../../features/splash/presentation/view/splash_view.dart';
@@ -23,7 +24,7 @@ class AppRouters {
       case Routing.register:
         return _buildRoute(Register());
       case Routing.myTasks:
-        return _buildRoute(Scaffold());
+        return _buildRoute(MyTasksView());
       
       default:
         return _buildRoute(
