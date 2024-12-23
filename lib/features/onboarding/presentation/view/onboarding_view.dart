@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:tasky/core/helpers/extensions.dart';
+import 'package:tasky/core/routers/routing.dart';
 import 'package:tasky/core/widgets/custom_button.dart';
 
 class OnboardingView extends StatelessWidget {
@@ -35,7 +37,7 @@ class OnboardingView extends StatelessWidget {
               )),
               CustomButton(
                 onPressed: () {
-                  
+                  context.pushReplacementNamed(Routing.login);
                 },
                 txt: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
