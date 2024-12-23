@@ -9,7 +9,7 @@ class DioConsumer extends ApiConsumer {
 
   DioConsumer({required this.dio}) {
     dio.options.baseUrl = EndPoint.baseUrl;
-    dio.interceptors.add(ApiInterceptor());
+    dio.interceptors.add(ApiInterceptor(api: DioConsumer(dio: dio)));
     dio.interceptors.add(LogInterceptor(
       request: true,
       requestHeader: true,
@@ -89,6 +89,30 @@ class DioConsumer extends ApiConsumer {
       return response.data;
     } on DioException catch (e) {
       handleDioExceptions(e);
+    }
+  }
+  @override
+  Future<dynamic> request(
+    String path, {
+    String method = 'GET',
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    bool isFromData = false,
+    Options? options,
+  }) async {
+    try {
+      final response = await dio.request(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options, 
+      );
+      return response.data;
+    } catch (e) {
+      if (e is DioException) {
+        return {'error': e.message, 'statusCode': e.response?.statusCode};
+      }
+      return {'error': e.toString()};
     }
   }
 }
