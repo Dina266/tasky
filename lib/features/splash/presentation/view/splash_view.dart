@@ -37,7 +37,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   void _getInitRoute() {
-    final isFirstTime = getIt<CacheHelper>().getData(key: CacheKeys.isFirstTime);
+    final isFirstTime = getIt<CacheHelper>().getData(key: CacheKeys.isFirstTime) ?? true;
     if (isFirstTime) {
       context.pushReplacementNamed(Routing.onboarding);
     } else {

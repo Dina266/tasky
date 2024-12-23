@@ -1,10 +1,13 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:tasky/core/helpers/extensions.dart';
 
 import '../../../../../core/widgets/custom_button.dart';
+import '../../view_model/auth_cubit/auth_cubit.dart';
 
 class RegisterBody extends StatefulWidget {
   const RegisterBody({super.key});
@@ -14,18 +17,20 @@ class RegisterBody extends StatefulWidget {
 }
 
 class _RegisterBodyState extends State<RegisterBody> {
-  String? _selectedExperienceLevel;
-  bool obscureText = false;
+  String? selectedExperienceLevel;
+  bool obscureText = true;
+  String? finalPhoneNumber;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
       child: Form(
+        key: context.read<AuthCubit>().signUpFormKey,
           child: Column(
         children: [
           TextFormField(
-            // controller: passwordController,
+            controller: context.read<AuthCubit>().signUpName,
             validator: (value) {
               if (!value!.isValidName) {
                 return 'Name not valid';
@@ -47,7 +52,7 @@ class _RegisterBodyState extends State<RegisterBody> {
           ),
           Gap(15.h),
           IntlPhoneField(
-            // controller: phoneController,
+            controller: context.read<AuthCubit>().signUpPhoneNumber,
             decoration: InputDecoration(
               hintText: '123 456-7890',
               hintStyle: TextStyle(
@@ -58,20 +63,25 @@ class _RegisterBodyState extends State<RegisterBody> {
                   borderSide: BorderSide(),
                   borderRadius: BorderRadius.circular(10)),
             ),
+            onChanged: (phone) {
+              setState(() {
+                finalPhoneNumber = phone.completeNumber;
+              });
+            },
             initialCountryCode: 'EG',
             dropdownIconPosition: IconPosition.trailing,
             flagsButtonPadding: EdgeInsets.symmetric(horizontal: 8),
           ),
           TextFormField(
-            // controller: passwordController,
+            controller: context.read<AuthCubit>().experienceYears,
             validator: (value) {
-              if (!value!.isValidName) {
-                return 'Name not valid';
+              if (value == null) {
+                return 'is Required';
               } else {
                 return null;
               }
             },
-            keyboardType: TextInputType.name,
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(
               hintText: 'Years of experience...',
               hintStyle: TextStyle(
@@ -85,14 +95,15 @@ class _RegisterBodyState extends State<RegisterBody> {
           ),
           Gap(15.h),
           DropdownButtonFormField<String>(
-            value: _selectedExperienceLevel,
+            value: selectedExperienceLevel,
             hint: Text('Choose experience Level'),
             onChanged: (String? newValue) {
               setState(() {
-                _selectedExperienceLevel = newValue;
+                selectedExperienceLevel = newValue;
+                context.read<AuthCubit>().experienceLevel.text= selectedExperienceLevel!;
               });
             },
-            items: <String>['Low', 'Medium', 'High']
+            items: <String>['fresh' , 'junior' , 'midLevel' , 'senior']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -107,10 +118,10 @@ class _RegisterBodyState extends State<RegisterBody> {
           ),
           Gap(15.h),
           TextFormField(
-            // controller: passwordController,
+            controller: context.read<AuthCubit>().address,
             validator: (value) {
               if (value == null) {
-                return 'Name not valid';
+                return 'address not valid';
               } else {
                 return null;
               }
@@ -129,7 +140,7 @@ class _RegisterBodyState extends State<RegisterBody> {
           ),
           Gap(15.h),
           TextFormField(
-            // controller: passwordController,
+            controller: context.read<AuthCubit>().signUpPassword,
             obscureText: obscureText,
             validator: (value) {
               if (!value!.isValidPassword) {
@@ -169,7 +180,10 @@ class _RegisterBodyState extends State<RegisterBody> {
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700),
               ),
-              onPressed: () {}),
+              onPressed: () {
+                // log(finalPhoneNumber!);
+                context.read<AuthCubit>().signUp(finalPhoneNumber!);
+              }),
         ],
       )),
     );
