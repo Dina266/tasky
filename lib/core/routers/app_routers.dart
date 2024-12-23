@@ -22,6 +22,8 @@ class AppRouters {
         return _buildRoute(Login());
       case Routing.register:
         return _buildRoute(Register());
+      case Routing.myTasks:
+        return _buildRoute(Scaffold());
       
       default:
         return _buildRoute(

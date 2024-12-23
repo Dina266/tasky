@@ -29,11 +29,10 @@ class UserRepository {
       final user = SignInModel.fromJson(response);
       final decodedAccessToken = JwtDecoder.decode(user.accessToken);
       final decodedRefreshToken = JwtDecoder.decode(user.refreshToken);
-      CacheHelper().saveData(key: ApiKey.token, value: user.id);
-      CacheHelper().saveData(key: ApiKey.id, value: decodedAccessToken[ApiKey.id]);
-      CacheHelper().saveData(key: ApiKey.id, value: decodedRefreshToken[ApiKey.id]);
-      log(response);
-      log(user.toString());
+      CacheHelper().saveData(key: ApiKey.id, value: user.id);
+      CacheHelper().saveData(key: ApiKey.accessToken, value: decodedAccessToken['userId']);
+      CacheHelper().saveData(key: ApiKey.refreshToken, value: decodedRefreshToken['userId']);
+      
       return Right(user);
     } on ServerException catch (e) {
       return Left(e.errModel.errorMessage);
@@ -52,7 +51,7 @@ class UserRepository {
     try {
       final response = await api.post(
         EndPoint.signUp,
-        isFromData: true,
+        // isFromData: true,
         data: {
           ApiKey.name: displayName,
           ApiKey.phone: phone,

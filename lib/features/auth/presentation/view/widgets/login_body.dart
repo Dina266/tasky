@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:tasky/core/helpers/extensions.dart';
+import 'package:tasky/core/routers/routing.dart';
 import 'package:tasky/core/widgets/custom_button.dart';
 import 'package:tasky/features/auth/presentation/view_model/auth_cubit/auth_cubit.dart';
 
@@ -96,6 +97,7 @@ class _LoginBodyState extends State<LoginBody> {
                   //     finalPhoneNumber!;
                       // log(context.read<AuthCubit>().signInPhoneNumber.text);
                   context.read<AuthCubit>().signIn(finalPhoneNumber!);
+                  // context.pushReplacementNamed(Routing.)
                 }),
           ],
         ),

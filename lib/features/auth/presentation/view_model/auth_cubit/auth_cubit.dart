@@ -62,11 +62,11 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  signIn(String password) async {
+  signIn(String phone) async {
     emit(SignInLoading());
     final response = await userRepository.signIn(
-      phone: signInPassword.text,
-      password: password,
+      password: signInPassword.text,
+      phone: phone,
     );
     response.fold(
       (errMessage) => emit(SignInFailure(errMessage: errMessage)),

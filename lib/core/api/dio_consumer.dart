@@ -9,7 +9,9 @@ class DioConsumer extends ApiConsumer {
 
   DioConsumer({required this.dio}) {
     dio.options.baseUrl = EndPoint.baseUrl;
-    dio.interceptors.add(ApiInterceptor(api: DioConsumer(dio: dio)));
+
+    // Create an ApiInterceptor instance and add it to the dio instance
+    dio.interceptors.add(ApiInterceptor(api: this));  // Avoid creating a new DioConsumer here
     dio.interceptors.add(LogInterceptor(
       request: true,
       requestHeader: true,
@@ -91,6 +93,7 @@ class DioConsumer extends ApiConsumer {
       handleDioExceptions(e);
     }
   }
+
   @override
   Future<dynamic> request(
     String path, {
@@ -105,7 +108,7 @@ class DioConsumer extends ApiConsumer {
         path,
         data: data,
         queryParameters: queryParameters,
-        options: options, 
+        options: options,
       );
       return response.data;
     } catch (e) {
