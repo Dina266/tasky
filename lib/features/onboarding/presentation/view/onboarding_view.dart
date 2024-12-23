@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:tasky/core/widgets/custom_button.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
@@ -32,19 +33,11 @@ class OnboardingView extends StatelessWidget {
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Color(0xff6E6A7C)),
                 textAlign: TextAlign.center,
               )),
-              SizedBox(
-                width: 331.w,
-          height: 49.h,
-          
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:WidgetStatePropertyAll(Color(0xff5F33E1)) ,
-                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)))
-                  ),
-                onPressed: (){
+              CustomButton(
+                onPressed: () {
                   
-                }, 
-                child: Row(
+                },
+                txt: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Let\'s Start', style: TextStyle(color: Colors.white, fontSize: 19 , fontWeight: FontWeight.w700),),
@@ -52,7 +45,6 @@ class OnboardingView extends StatelessWidget {
                     SvgPicture.asset('assets/images/arrow_left.svg',
                     )
                   ],
-                )
                 ),
               ),
                 ],
@@ -60,3 +52,4 @@ class OnboardingView extends StatelessWidget {
         ));
   }
 }
+
