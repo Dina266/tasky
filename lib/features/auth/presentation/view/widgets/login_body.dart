@@ -120,6 +120,7 @@ class _LoginBodyState extends State<LoginBody> {
                           fontWeight: FontWeight.w700),
                     ),
                     onPressed: () {
+                      FocusScope.of(context).unfocus();
                       // log(finalPhoneNumber!);
                       // context.read<AuthCubit>().signInPhoneNumber.text =
                       //     finalPhoneNumber!;
