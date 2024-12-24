@@ -1,15 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tasky/core/helpers/extensions.dart';
-import 'package:tasky/core/routers/routing.dart';
 import 'task_qr_generator.dart';
 import 'task_sections.dart';
 
 class TaskDetailsScreen extends StatelessWidget {
   const TaskDetailsScreen({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,21 +18,29 @@ class TaskDetailsScreen extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
         leading: IconButton(
-          onPressed: (){
-            context.pop();
-          }, 
-          icon: SvgPicture.asset('assets/images/arrow_back.svg')),
+            onPressed: () {
+              context.pop();
+            },
+            icon: SvgPicture.asset('assets/images/arrow_back.svg')),
         actions: [
           PopupMenuButton(
             icon: const Icon(Icons.more_vert, color: Colors.black),
             itemBuilder: (context) => [
               PopupMenuItem(
-                child: const Text("Edit"),
+                height: 15,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Edit"),
+                    Divider(),
+                  ],
+                ),
                 onTap: () {
-                  context.pushNamed(Routing.editTask);
+                  //action to save data changed
                 },
               ),
               PopupMenuItem(
+                height: 15,
                 child: const Text(
                   "Delete",
                   style: TextStyle(color: Colors.red),
@@ -88,6 +93,3 @@ class TaskDetailsScreen extends StatelessWidget {
     );
   }
 }
-
-
-

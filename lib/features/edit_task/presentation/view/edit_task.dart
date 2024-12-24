@@ -40,7 +40,7 @@ class _EditTaskState extends State<EditTask> {
       appBar: AppBar(
         titleSpacing: 0,
         title: const Text(
-          "Profile",
+          "Add new task",
           style: TextStyle(color: Colors.black),
         ),
         leading: IconButton(
