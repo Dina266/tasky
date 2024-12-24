@@ -172,30 +172,6 @@ class _EditTaskState extends State<EditTask> {
                 onPressed: (){
                   //todo
                 }),
-                CustomButton(txt: Text('Add Task',style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white
-                ),), 
-                onPressed: (){
-                  //todo
-                }),
-                CustomButton(txt: Text('Add Task',style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white
-                ),), 
-                onPressed: (){
-                  //todo
-                }),
-                CustomButton(txt: Text('Add Task',style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white
-                ),), 
-                onPressed: (){
-                  //todo
-                }),
               ],
             ),
           ),

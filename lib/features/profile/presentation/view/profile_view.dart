@@ -35,10 +35,13 @@ class ProfileView extends StatelessWidget {
               icon: SvgPicture.asset('assets/images/arrow_back.svg')
             ),
           ),
-          body: state is GetUserLoading
-              ? const CircularProgressIndicator()
-              : state is GetUserSuccess
-                  ? Padding(
+          body: 
+          // state is GetUserLoading
+          //     ? const CircularProgressIndicator()
+          //     : state is GetUserSuccess
+          //         ? 
+                  
+                  Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +57,8 @@ class ProfileView extends StatelessWidget {
                 _buildProfileField('LOCATION', 'Fayyum, Egypt', context),
               ],
             ),
-          ) :Container()
+          ) 
+          // :Container()
         );
       },
     );

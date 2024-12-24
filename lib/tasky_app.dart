@@ -14,7 +14,7 @@ class TaskyApp extends StatelessWidget {
         builder: (_, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            initialRoute: Routing.myTasks,
+            initialRoute: Routing.init,
             // themeMode: ThemeMode.light,
             onGenerateRoute: AppRouters().generateRoute,
           );
