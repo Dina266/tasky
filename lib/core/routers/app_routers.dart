@@ -5,6 +5,7 @@ import 'package:tasky/core/routers/routing.dart';
 import 'package:tasky/features/auth/presentation/view/login.dart';
 import 'package:tasky/features/auth/presentation/view/register.dart';
 import 'package:tasky/features/my_tasks/presentation/view/my_tasks_view.dart';
+import 'package:tasky/features/my_tasks/presentation/view/widgets/task_detail_screen.dart';
 
 import '../../features/onboarding/presentation/view/onboarding_view.dart';
 import '../../features/splash/presentation/view/splash_view.dart';
@@ -25,6 +26,8 @@ class AppRouters {
         return _buildRoute(Register());
       case Routing.myTasks:
         return _buildRoute(MyTasksView());
+      case Routing.taskDetail:
+        return _buildRoute(TaskDetailsScreen());
       
       default:
         return _buildRoute(
