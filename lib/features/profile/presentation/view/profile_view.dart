@@ -46,7 +46,7 @@ class ProfileView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildProfileField('NAME', 'state.user.displayName', context),
+                _buildProfileField('NAME', 'Islam Sayed', context),
                 SizedBox(height: 16.0),
                 _buildProfileField('PHONE', '+20 123 456-7890', context),
                 SizedBox(height: 16.0),
