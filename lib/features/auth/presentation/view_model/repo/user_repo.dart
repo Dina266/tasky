@@ -71,16 +71,21 @@ class UserRepository {
   }
 
   Future<Either<String, UserModel>> getUserProfile() async {
-    try {
-      final response = await api.get(
-        EndPoint.getUserDataEndPoint(
-          CacheHelper().getData(key: ApiKey.id),
-        ),
-      );
-      
-      return Right(UserModel.fromJson(response));
-    } on ServerException catch (e) {
-      return Left(e.errModel.errorMessage);
-    }
+  try {
+    final headers = {
+      'Authorization': 'bearer ${CacheHelper().getData(key: ApiKey.id)}', 
+    };
+    final response = await api.get(
+      'https://todo.iraqsapp.com/auth/profile/',
+      headers: headers,
+    );
+
+    return Right(UserModel.fromJson(response));
+  } on ServerException catch (e) {
+    return Left(e.errModel.errorMessage);
+  } catch (e) {
+    return Left(e.toString());
   }
+}
+
 }

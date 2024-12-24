@@ -26,9 +26,10 @@ class _RegisterBodyState extends State<RegisterBody> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is SignUpSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(state.message),
-            ));
+          
+            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            //   content: Text(state.message),
+            // ));
             context.pushReplacementNamed(Routing.login);
           } else if (state is SignUpFailure) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -16,10 +16,9 @@ class LoginBody extends StatefulWidget {
 }
 
 class _LoginBodyState extends State<LoginBody> {
-  final passwordController = TextEditingController();
-  final phoneController = TextEditingController();
   bool obscureText = true;
   String? finalPhoneNumber;
+    GlobalKey<FormState> signInFormKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
@@ -30,8 +29,9 @@ class _LoginBodyState extends State<LoginBody> {
                 content: Text("Log Success"),
               ),
             );
+            
             context.pushReplacementNamed(Routing.myTasks);
-            // context.read<AuthCubit>().getUserProfile();
+            context.read<AuthCubit>().getUserProfile();
             // Navigator.push(
             //   context,
             //   MaterialPageRoute(
@@ -51,7 +51,7 @@ class _LoginBodyState extends State<LoginBody> {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Form(
-            key: context.read<AuthCubit>().signInFormKey,
+            key: signInFormKey,
             child: Column(
               children: [
                 IntlPhoneField(

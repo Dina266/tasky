@@ -19,9 +19,9 @@ final class SignInFailure extends AuthState {
 }
 
 final class SignUpSuccess extends AuthState {
-  final String message;
+  final String token;
 
-  SignUpSuccess({required this.message});
+  SignUpSuccess({required this.token});
 }
 
 final class SignUpLoading extends AuthState {}

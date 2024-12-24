@@ -2,10 +2,12 @@ import 'package:dio/dio.dart';
 
 abstract class ApiConsumer {
   Future<dynamic> get(
-    String path, {
-    Object? data,
-    Map<String, dynamic>? queryParameters,
-  });
+  String path, {
+  Object? data,
+  Map<String, dynamic>? queryParameters,
+  Map<String, String>? headers, // Add nullable headers
+});
+
   Future<dynamic> post(
     String path, {
     Object? data,

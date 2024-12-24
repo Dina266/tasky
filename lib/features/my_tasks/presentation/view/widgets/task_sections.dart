@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 class TaskSections extends StatefulWidget {
   const TaskSections({super.key});
@@ -11,24 +12,22 @@ class TaskSections extends StatefulWidget {
 }
 
 class TaskSectionsState extends State<TaskSections> {
-  DateTime? selectedDate;
+  String? selectedDate;
   String status = "Inprogress";
   String priority = "Medium";
 
   final List<String> statusOptions = ["Inprogress", "Waiting", "Finished"];
   final List<String> priorityOptions = ["Low", "Medium", "High"];
-
-  Future<void> _pickDate(BuildContext context) async {
+Future<void> pickDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: selectedDate ?? DateTime.now(),
+      initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
-    if (pickedDate != null && pickedDate != selectedDate) {
+    if (pickedDate != null ) {
       setState(() {
-        selectedDate = pickedDate;
-        
+        selectedDate = DateFormat('dd MMMM yyyy').format(pickedDate);
       });
     }
   }
@@ -54,9 +53,8 @@ class TaskSectionsState extends State<TaskSections> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        selectedDate != null
-                            ? "${selectedDate!.day} ${_monthName(selectedDate!.month)}, ${selectedDate!.year}"
-                            : "${DateTime.now().day} ${_monthName(DateTime.now().month)}, ${DateTime.now().year}",
+                        selectedDate == null ? DateFormat('dd MMMM yyyy').format(DateTime.now())
+                        :selectedDate!,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -67,7 +65,7 @@ class TaskSectionsState extends State<TaskSections> {
                   const Spacer(),
                   IconButton(
                     icon: SvgPicture.asset("assets/images/calendar.svg"),
-                    onPressed: () => _pickDate(context),
+                    onPressed: () => pickDate(context),
                   ),
                 ],
               ),
@@ -136,21 +134,5 @@ class TaskSectionsState extends State<TaskSections> {
           ]
     );
   }
-  String _monthName(int month) {
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ];
-    return months[month - 1];
-  }
+  
 }

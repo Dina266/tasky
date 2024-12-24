@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tasky/core/helpers/extensions.dart';
+import 'package:tasky/core/routers/routing.dart';
 import 'task_qr_generator.dart';
 import 'task_sections.dart';
 
@@ -14,6 +15,7 @@ class TaskDetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        titleSpacing: 0,
         title: const Text(
           "Task Details",
           style: TextStyle(color: Colors.black),
@@ -29,7 +31,9 @@ class TaskDetailsScreen extends StatelessWidget {
             itemBuilder: (context) => [
               PopupMenuItem(
                 child: const Text("Edit"),
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(Routing.editTask);
+                },
               ),
               PopupMenuItem(
                 child: const Text(

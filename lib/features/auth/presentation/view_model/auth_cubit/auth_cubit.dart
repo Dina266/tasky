@@ -14,13 +14,13 @@ class AuthCubit extends Cubit<AuthState> {
 
   final UserRepository userRepository;
   //Sign in Form key
-  GlobalKey<FormState> signInFormKey = GlobalKey();
+  // GlobalKey<FormState> signInFormKey = GlobalKey();
   //Sign in email
   TextEditingController signInEmail = TextEditingController();
   //Sign in password
   TextEditingController signInPassword = TextEditingController();
   //Sign Up Form key
-  GlobalKey<FormState> signUpFormKey = GlobalKey();
+  // GlobalKey<FormState> signUpFormKey = GlobalKey();
   //Profile Pic
   XFile? profilePic;
   //Sign up name
@@ -45,20 +45,20 @@ class AuthCubit extends Cubit<AuthState> {
     emit(UploadProfilePic());
   }
 
-  signUp(String password) async {
+  signUp(String phone) async {
     emit(SignUpLoading());
     final response = await userRepository.signUp(
       displayName: signUpName.text,
-      phone: signUpPhoneNumber.text,
+      phone: phone,
       experienceYears: experienceYears.text,
       experienceLevel: experienceLevel.text,
-      password: password,
+      password: signUpPassword.text,
       address: address.text,
       // profilePic: profilePic!,
     );
     response.fold(
       (errMessage) => emit(SignUpFailure(errMessage: errMessage)),
-      (signUpModel) => emit(SignUpSuccess(message: signUpModel.message)),
+      (signUpModel) => emit(SignUpSuccess(token: signUpModel.access_token)),
     );
   }
 
@@ -74,12 +74,13 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  getUserProfile() async {
-    emit(GetUserLoading());
-    final response = await userRepository.getUserProfile();
-    response.fold(
-      (errMessage) => emit(GetUserFailure(errMessage: errMessage)),
-      (user) => emit(GetUserSuccess(user: user)),
-    );
-  }
+  void getUserProfile() async {
+  emit(GetUserLoading());
+  final response = await userRepository.getUserProfile();
+  response.fold(
+    (errMessage) => emit(GetUserFailure(errMessage: errMessage)),
+    (user) => emit(GetUserSuccess(user: user)),
+  );
+}
+
 }

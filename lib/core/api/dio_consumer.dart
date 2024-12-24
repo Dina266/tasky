@@ -4,6 +4,7 @@ import 'package:tasky/core/api/end_points.dart';
 
 import '../errors/exceptions.dart';
 import 'api_interceptors.dart';
+
 class DioConsumer extends ApiConsumer {
   final Dio dio;
 
@@ -11,7 +12,8 @@ class DioConsumer extends ApiConsumer {
     dio.options.baseUrl = EndPoint.baseUrl;
 
     // Create an ApiInterceptor instance and add it to the dio instance
-    dio.interceptors.add(ApiInterceptor(api: this));  // Avoid creating a new DioConsumer here
+    dio.interceptors.add(
+        ApiInterceptor(api: this)); // Avoid creating a new DioConsumer here
     dio.interceptors.add(LogInterceptor(
       request: true,
       requestHeader: true,
@@ -42,13 +44,19 @@ class DioConsumer extends ApiConsumer {
   }
 
   @override
-  Future get(String path,
-      {Object? data, Map<String, dynamic>? queryParameters}) async {
+  Future get(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Map<String, String>? headers, // Add nullable headers
+  }) async {
     try {
       final response = await dio.get(
         path,
-        data: data,
         queryParameters: queryParameters,
+        options: Options(
+          headers: headers, // Pass headers to Options
+        ),
       );
       return response.data;
     } on DioException catch (e) {

@@ -2,16 +2,19 @@
 import '../../../../../core/api/end_points.dart';
 
 class SignUpModel {
-  final String message;
-  final String error;
-  final String statusCode;
+  final String id;
+  final String displayName;
+  final String access_token;
+  final String refresh_token;
 
-  SignUpModel({required this.error,required this.statusCode, required this.message});
   factory SignUpModel.fromJson(Map<String, dynamic> jsonData) {
     return SignUpModel(
-      message: jsonData[ApiKey.message],
-      error: jsonData[ApiKey.errorMessage],
-      statusCode: jsonData[ApiKey.status],
+      id: jsonData[ApiKey.id],
+      displayName: jsonData[ApiKey.name],
+      access_token: jsonData[ApiKey.accessToken],
+      refresh_token: jsonData[ApiKey.refreshToken],
       );
   }
+
+  SignUpModel({required this.id, required this.displayName, required this.access_token, required this.refresh_token});
 }

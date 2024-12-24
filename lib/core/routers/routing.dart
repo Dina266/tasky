@@ -5,4 +5,6 @@ abstract class Routing {
   static const String register = '/register';
   static const String myTasks = '/myTasks';
   static const String taskDetail = '/taskDetail';
+  static const String profile = '/profile';
+  static const String editTask = '/editTask';
 }
