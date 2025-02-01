@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import 'package:tasky/core/helpers/extensions.dart';
 import 'package:tasky/core/routers/routing.dart';
 import 'widgets/custom_tab_bar.dart';
@@ -58,7 +60,31 @@ class MyTasksView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                String? res = await SimpleBarcodeScanner.scanBarcode(
+                  context,
+                  barcodeAppBar: const BarcodeAppBar(
+                    appBarTitle: 'Test',
+                    centerTitle: false,
+                    enableBackButton: true,
+                    backButtonIcon: Icon(Icons.arrow_back_ios),
+                  ),
+                  isShowFlashIcon: true,
+                  delayMillis: 2000,
+                  cameraFace: CameraFace.back,
+                );
+
+                if (res != null) {
+                  log(res);
+                  // Navigate to QrResultPage and pass the scanned result
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => QRResultPage(scannedResult: res),
+                    ),
+                  );
+                }
+              },
               icon: Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -77,6 +103,27 @@ class MyTasksView extends StatelessWidget {
                     color: Colors.white,
                   ))),
         ],
+      ),
+    );
+  }
+}
+
+class QRResultPage extends StatelessWidget {
+  final String scannedResult;
+
+  const QRResultPage({Key? key, required this.scannedResult}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Scanned QR Code'),
+      ),
+      body: Center(
+        child: Text(
+          'Scanned Result: $scannedResult',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }
